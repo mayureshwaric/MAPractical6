@@ -1,8 +1,41 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: The First Step
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'
+
 version: 2
 jobs:
- build:
-   docker:  
-     - image: circleci/ruby:2.4.1 
-   steps:  
-     - checkout  
-     - run: echo "I am Mayureshwari Chavan and this is my first github project."
+        build:
+                docker:
+                - image: busybox:latest
+                steps:
+                - run:
+                        name: Hello World
+                        command: echo "Hello World"
+
+stages:
+    - build
+    - test
+   
+build:
+    stage: build
+    script:
+        - echo "Building"
+        - mkdir build
+        - touch build/info.txt
+    artifacts:
+        paths:
+            - build/
+           
+test:
+    stage: test
+    script:
+        - echo "Testing"
+        - test -f "build/info.txt"	
